@@ -11,10 +11,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pet")
-@RequiredArgsConstructor
 public class PetController {
 
     private final PetService petService;
+
+    public PetController(PetService petService) {
+        this.petService = petService;
+    }
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody Pet pet){
@@ -40,7 +43,7 @@ public class PetController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Pet> replacePet (@PathVariable Integer id,
-                                             @RequestBody Pet novoPet){
+                                           @RequestBody Pet novoPet){
         petService.substituirPet(id, novoPet);
         return ResponseEntity.ok().build();
     }
