@@ -17,38 +17,40 @@ public class PetController {
     private final PetService petService;
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody Pet pet){
-        petService.salvarPet(pet);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> save(@RequestBody Pet pet){
+        Pet savedPet = petService.salvarPet(pet);
+        return ResponseEntity.ok("Pet " + savedPet.getNome() + "salvo com sucesso");
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pet> findById(@PathVariable Integer id){
-        return ResponseEntity.ok(petService.buscarPetPorId(id));
+    public ResponseEntity<String> findById(@PathVariable Integer id){
+        Pet pet = petService.buscarPetPorId(id);
+        return ResponseEntity.ok("Pet encontrado: " + pet.getNome());
     }
 
     @GetMapping
-    public ResponseEntity<List<Pet>> findAll(){
-        return ResponseEntity.ok(petService.listarPets());
+    public ResponseEntity<String> findAll(){
+        List<Pet> pets = petService.listarPets();
+        return ResponseEntity.ok("Total de pets cadastrados " + pets.size());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Integer id){
+    public ResponseEntity<String> deleteById(@PathVariable Integer id){
         petService.deletarPetPorId(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Pet deletado com sucesso");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pet> replacePet (@PathVariable Integer id,
+    public ResponseEntity<String> replacePet (@PathVariable Integer id,
                                              @RequestBody Pet novoPet){
-        petService.substituirPet(id, novoPet);
-        return ResponseEntity.ok().build();
+        Pet pet = petService.substituirPet(id, novoPet);
+        return ResponseEntity.ok("Pet " + pet.getNome() + " substituído com sucesso");
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Pet> updatePet(@PathVariable Integer id,
+    public ResponseEntity<String> updatePet(@PathVariable Integer id,
                                          @RequestBody Pet novoPet){
-        petService.atualizarPet(id, novoPet);
-        return ResponseEntity.ok().build();
+        Pet pet = petService.atualizarPet(id, novoPet);
+        return ResponseEntity.ok("Pet " + pet.getNome() + " atualizado com sucesso");
     }
 }
