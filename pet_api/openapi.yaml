@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: Pet API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /pet:
+    get:
+      summary: Listar todos os pets
+      responses:
+        '200':
+          description: Lista de pets com mensagem
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Total de pets cadastrados: 2
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pet'
+    post:
+      summary: Salvar um novo pet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+      responses:
+        '200':
+          description: Pet salvo com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Pet salvo com sucesso
+                  data:
+                    $ref: '#/components/schemas/Pet'
+  /pet/{id}:
+    get:
+      summary: Buscar pet por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Pet encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Pet encontrado
+                  data:
+                    $ref: '#/components/schemas/Pet'
+    delete:
+      summary: Deletar pet por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Pet deletado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Pet deletado com sucesso
+                  data:
+                    type: object
+                    nullable: true
+    put:
+      summary: Substituir pet por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+      responses:
+        '200':
+          description: Pet substituído
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Pet substituído com sucesso
+                  data:
+                    $ref: '#/components/schemas/Pet'
+    patch:
+      summary: Atualizar pet parcialmente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+      responses:
+        '200':
+          description: Pet atualizado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Pet atualizado com sucesso
+                  data:
+                    $ref: '#/components/schemas/Pet'
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nome:
+          type: string
+          example: Rex
+        idade:
+          type: integer
+          example: 3
+        peso:
+          type: number
+          format: float
+          example: 10.0
+        sexo:
+          type: string
+          example: M
