@@ -10,10 +10,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pet")
-@RequiredArgsConstructor
 public class PetController {
 
     private final PetService petService;
+
+    public PetController(PetService petService) {
+        this.petService = petService;
+    }
 
     @PostMapping
     public ResponseEntity<String> save(@RequestBody Pet pet){
