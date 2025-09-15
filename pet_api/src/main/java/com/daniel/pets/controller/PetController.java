@@ -4,6 +4,8 @@ package com.daniel.pets.controller;
 import com.daniel.pets.business.PetService;
 import com.daniel.pets.infrastructure.entities.Pet;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +22,15 @@ public class PetController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody Pet pet){
-        petService.salvarPet(pet);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Pet> save(@RequestBody Pet pet){
+        Pet novoPet = petService.salvarPet(pet);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoPet);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Pet> findById(@PathVariable Integer id){
-        return ResponseEntity.ok(petService.buscarPetPorId(id));
+        Pet pet = petService.buscarPetPorId(id);
+        return ResponseEntity.ok(pet);
     }
 
     @GetMapping
@@ -44,14 +47,14 @@ public class PetController {
     @PutMapping("/{id}")
     public ResponseEntity<Pet> replacePet (@PathVariable Integer id,
                                            @RequestBody Pet novoPet){
-        petService.substituirPet(id, novoPet);
-        return ResponseEntity.ok().build();
+        Pet atualizado = petService.substituirPet(id, novoPet);
+        return ResponseEntity.ok(atualizado);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Pet> updatePet(@PathVariable Integer id,
                                          @RequestBody Pet novoPet){
-        petService.atualizarPet(id, novoPet);
-        return ResponseEntity.ok().build();
+        Pet atualizado = petService.atualizarPet(id, novoPet);
+        return ResponseEntity.ok(atualizado);
     }
 }
