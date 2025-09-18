@@ -34,7 +34,6 @@ public class DonoController {
         return ResponseEntity.ok(donoService.listarDonos());
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(Integer id){
         return ResponseEntity.noContent().build();
