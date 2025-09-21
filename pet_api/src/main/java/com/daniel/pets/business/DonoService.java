@@ -23,7 +23,6 @@ public class DonoService {
         );
     }
 
-
     public Dono substituirDono(Integer id, Dono novoDono){
         Dono donoExistente = donoReposository.findById(id).orElseThrow(
                 () -> new RuntimeException("id não encontrado")
