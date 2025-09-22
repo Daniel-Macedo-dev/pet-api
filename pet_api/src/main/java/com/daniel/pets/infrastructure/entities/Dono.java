@@ -2,6 +2,7 @@ package com.daniel.pets.infrastructure.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,8 +14,8 @@ public class Dono {
     private String email;
     private String telefone;
 
-    @OneToMany(mappedBy = "dono")
-    private List<Pet> pets;
+    @OneToMany(mappedBy = "dono", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pet> pets = new ArrayList<>();
 
     public Dono(){}
 

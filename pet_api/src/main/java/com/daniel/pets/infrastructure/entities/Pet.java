@@ -14,6 +14,9 @@ public class Pet {
     private Float peso;
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
+    @ManyToOne
+    @JoinColumn(name = "dono_id")
+    private Dono dono;
 
     public Pet() {}
 
@@ -39,6 +42,9 @@ public class Pet {
 
     public Sexo getSexo() { return sexo; }
     public void setSexo(Sexo sexo) { this.sexo = sexo; }
+
+    public Dono getDono() { return dono; }
+    public void setDono(Dono dono) { this.dono = dono; }
 
     public enum Sexo {
         MASCULINO,
