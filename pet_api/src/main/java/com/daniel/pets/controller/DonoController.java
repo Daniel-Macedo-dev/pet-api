@@ -30,12 +30,13 @@ public class DonoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Dono>> findAll(Integer id){
+    public ResponseEntity<List<Dono>> findAll(){
         return ResponseEntity.ok(donoService.listarDonos());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(Integer id){
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id){
+        donoService.deletarDonoPorId(id);
         return ResponseEntity.noContent().build();
     }
 
