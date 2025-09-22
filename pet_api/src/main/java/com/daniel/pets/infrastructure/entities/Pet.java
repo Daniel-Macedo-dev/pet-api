@@ -1,5 +1,6 @@
 package com.daniel.pets.infrastructure.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Table(name = "pet_table")
@@ -14,8 +15,9 @@ public class Pet {
     private Float peso;
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "dono_id")
+    @JsonBackReference
     private Dono dono;
 
     public Pet() {}

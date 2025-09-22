@@ -1,10 +1,12 @@
 package com.daniel.pets.infrastructure.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Table(name = "dono_table")
 @Entity
 public class Dono {
     @Id
@@ -15,6 +17,7 @@ public class Dono {
     private String telefone;
 
     @OneToMany(mappedBy = "dono", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Pet> pets = new ArrayList<>();
 
     public Dono(){}

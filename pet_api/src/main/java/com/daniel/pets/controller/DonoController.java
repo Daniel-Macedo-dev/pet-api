@@ -24,7 +24,7 @@ public class DonoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Dono> findById(Integer id){
+    public ResponseEntity<Dono> findById(@PathVariable Integer id){
         Dono dono = donoService.buscarDonoPorId(id);
         return ResponseEntity.ok(dono);
     }
