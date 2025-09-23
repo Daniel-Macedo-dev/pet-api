@@ -2,10 +2,11 @@ package com.daniel.pets.controller;
 
 
 import com.daniel.pets.business.PetService;
+import com.daniel.pets.client.PlayerClient;
 import com.daniel.pets.infrastructure.entities.Pet;
-import lombok.RequiredArgsConstructor;
+import com.daniel.pets.infrastructure.entities.PetComPlayerDTO;
+import com.daniel.pets.infrastructure.entities.PlayerDTO;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +17,11 @@ import java.util.List;
 public class PetController {
 
     private final PetService petService;
+    private final PlayerClient playerClient;
 
-    public PetController(PetService petService) {
+    public PetController(PetService petService, PlayerClient playerClient) {
         this.petService = petService;
+        this.playerClient = playerClient;
     }
 
     @PostMapping
@@ -42,6 +45,23 @@ public class PetController {
     public ResponseEntity<Void> deleteById(@PathVariable Integer id){
         petService.deletarPetPorId(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/com-player")
+    public ResponseEntity<PetComPlayerDTO> getPetComPlayer(@PathVariable Integer id,
+                                                           @RequestParam String playerId) {
+        Pet pet = petService.buscarPetPorId(id);
+        PlayerDTO player = playerClient.buscarPlayer(playerId);
+
+        PetComPlayerDTO dto = new PetComPlayerDTO();
+        dto.setId(pet.getId());
+        dto.setNome(pet.getNome());
+        dto.setIdade(pet.getIdade());
+        dto.setPeso(pet.getPeso());
+        dto.setSexo(pet.getSexo() != null ? pet.getSexo().name() : null);
+        dto.setPlayer(player);
+
+        return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/{id}")
