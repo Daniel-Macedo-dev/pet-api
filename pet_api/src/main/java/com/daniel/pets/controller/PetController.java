@@ -34,7 +34,6 @@ public class PetController {
     public ResponseEntity<Pet> findById(@PathVariable Integer id){
         Pet pet = petService.buscarPetPorId(id);
         return ResponseEntity.ok(pet);
-
     }
 
     @GetMapping
