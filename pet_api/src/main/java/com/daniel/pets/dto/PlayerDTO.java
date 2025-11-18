@@ -1,4 +1,4 @@
-package com.daniel.pets.infrastructure.entities;
+package com.daniel.pets.dto;
 
 public record PlayerDTO(
         String id,

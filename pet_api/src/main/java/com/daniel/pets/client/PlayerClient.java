@@ -1,6 +1,6 @@
 package com.daniel.pets.client;
 
-import com.daniel.pets.infrastructure.entities.PlayerDTO;
+import com.daniel.pets.dto.PlayerDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
