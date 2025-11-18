@@ -48,18 +48,21 @@ public class PetController {
     }
 
     @GetMapping("/{id}/com-player")
-    public ResponseEntity<PetComPlayerDTO> getPetComPlayer(@PathVariable Integer id,
-                                                           @RequestParam String playerId) {
+    public ResponseEntity<PetComPlayerDTO> getPetComPlayer(
+            @PathVariable Integer id,
+            @RequestParam String playerId
+    ) {
         Pet pet = petService.buscarPetPorId(id);
         PlayerDTO player = playerClient.buscarPlayer(playerId);
 
-        PetComPlayerDTO dto = new PetComPlayerDTO();
-        dto.setId(pet.getId());
-        dto.setNome(pet.getNome());
-        dto.setIdade(pet.getIdade());
-        dto.setPeso(pet.getPeso());
-        dto.setSexo(pet.getSexo() != null ? pet.getSexo().name() : null);
-        dto.setPlayer(player);
+        PetComPlayerDTO dto = new PetComPlayerDTO(
+                pet.getId(),
+                pet.getNome(),
+                pet.getIdade(),
+                pet.getPeso(),
+                pet.getSexo() != null ? pet.getSexo().name() : null,
+                player
+        );
 
         return ResponseEntity.ok(dto);
     }
